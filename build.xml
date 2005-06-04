@@ -1,0 +1,66 @@
+<project name="infopad" default="compile" basedir=".">
+
+<target name="init">
+  <property name="depbase" value="${basedir}/deploy"/>
+  <property name="src" value="${basedir}/src"/>
+  <property name="icons" value="${basedir}/icons"/>
+  <property name="helpdoc" value="${basedir}/helpdoc"/>
+  <property name="build" value="${basedir}/build"/>
+  <property name="docdir" value="${build}/doc"/>
+  <property name="fset" value="com/idolstarastronomer/infopad/**"/>
+  <property name="jnlpdir" value="${basedir}/jnlp"/>
+  <property name="jnlpdeploy" value="${depbase}/jnlp"/>
+  <property name="jarname" value="infopad.jar"/>
+  <property name="conf" value="${basedir}/conf"/>
+</target>
+
+<target name="clean" depends="init">
+  <delete dir="${build}"/>
+  <delete dir="${depbase}"/>
+</target>
+
+<target name="prepare" depends="init">
+  <mkdir dir="${build}"/>
+  <mkdir dir="${depbase}"/>
+</target>
+
+<target name="compile" depends="prepare">
+  <javac srcdir="${src}" destdir="${build}" source="1.4" target="1.4"
+  optimize="yes"/>
+  <copy todir="${build}/icons">
+    <fileset dir="${icons}"/>
+  </copy>
+  <copy todir="${build}/helpdoc">
+    <fileset dir="${helpdoc}"/>
+  </copy>
+</target>
+
+<target name="debug" depends="prepare">
+  <javac srcdir="${src}" destdir="${build}" source="1.4" target="1.4"
+  debug="yes"/>
+  <copy todir="${build}/icons">
+    <fileset dir="${icons}"/>
+  </copy>
+  <copy todir="${build}/helpdoc">
+    <fileset dir="${helpdoc}"/>
+  </copy>
+</target>
+
+<target name="jar" depends="compile">
+  <jar jarfile="${depbase}/${jarname}" basedir="${build}"
+  manifest="${conf}/manifest"/>
+</target>
+
+<target name="jarsign" depends="jar">
+  <input message="Type in your key password:" addproperty="keypass"/>
+  <signjar jar="${depbase}/${jarname}" alias="devries" storepass="${keypass}"/>
+</target>
+
+<target name="jnlp" depends="jarsign">
+  <copy todir="${jnlpdeploy}">
+    <fileset dir="${jnlpdir}"/>
+  </copy>
+  <copy file="${depbase}/${jarname}" todir="${jnlpdeploy}"/>
+</target>
+
+</project>
