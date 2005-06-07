@@ -14,7 +14,7 @@ public class AboutDialog {
 
     public AboutDialog(MainUI owner) {
 	this.owner = owner;
-	dialogPane = new JOptionPane("<html><p align=\"center\"><font size=\"+1\">InfoPad alpha-4</font><br>&copy; 2005<br>Christopher De Vries</html></p>",JOptionPane.INFORMATION_MESSAGE);
+	dialogPane = new JOptionPane("<html><p align=\"center\"><font size=\"+1\">InfoPad alpha-5</font><br>&copy; 2005<br>Christopher De Vries</html></p>",JOptionPane.INFORMATION_MESSAGE);
 	dialogPane.setIcon(owner.infoPadIcon);
     }
 

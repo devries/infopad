@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for LST Clock Application -->
+<jnlp
+  spec="1.0+"
+  codebase="http://infopad.sourceforge.net/jnlp"
+  href="infopad.jnlp">
+  <information>
+    <title>InfoPad</title>
+    <vendor>Christopher De Vries</vendor>
+    <homepage href="index.html"/>
+    <description>A Simple Utility for Small Random Information</description>
+    <description kind="short">InfoPad allows you to store short notes in a searchable notebook.</description>
+    <icon href="icon-trans.gif"/>
+    <icon kind="splash" href="infopad-splash.gif"/>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.4+"/>
+    <jar href="infopad.jar"/>
+    <property name="java.awt.Window.locationByPlatform" value="true"/>
+  </resources>
+  <application-desc main-class="com.idolstarastronomer.infopad.MainApp"/>
+  <security>
+    <all-permissions/>
+  </security>
+</jnlp>

@@ -1,0 +1,21 @@
+InfoPad is an application designed to store short notes. It is based on the
+concept of a spiral notebook, however it is searchable and expandable. I first
+designed InfoPad because I always had to note down little pieces of
+information, and ended up usually writing them on post-it notes and putting
+them on my computer monitor. Some computers include a post-it note program, but
+that does little more than clutter up your desktop. I wanted a single window
+where I could write notes, where they would automatically be backed up, and
+that would automatically save them. I decided to take a day to write this
+program. I ended up writing this version over a period of about a week. The key
+feature of this program is the search bar. It accepts regular expression
+searches and returns the first note that matches as you type, highlighting all
+matches in that note. Click the "Find Next" button and you go to the next
+matching note (if there is one). I personally find this to be a good way of
+organizing short notes. Now my monitor is post-it note free.
+
+To run infopad just type
+
+java -jar infopad.jar
+
+or double click on the jar file. You must install java (http://www.java.com/)
+for this program to work.

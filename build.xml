@@ -12,6 +12,9 @@
   <property name="jnlpdeploy" value="${depbase}/jnlp"/>
   <property name="jarname" value="infopad.jar"/>
   <property name="conf" value="${basedir}/conf"/>
+  <property name="distbuild" value="${build}/sdist"/>
+  <property name="sharbuild" value="${build}/shar"/>
+  <property name="sharname" value="infopad-install.sh"/>
 </target>
 
 <target name="clean" depends="init">
@@ -51,6 +54,28 @@
   manifest="${conf}/manifest"/>
 </target>
 
+<target name="shar" depends="jar">
+  <copy todir="${sharbuild}">
+    <fileset dir="${basedir}/shar">
+      <include name="install.sh"/>
+    </fileset>
+    <fileset dir="${basedir}/doc">
+      <include name="LICENSE"/>
+      <include name="README-unix"/>
+    </fileset>
+    <fileset dir="${depbase}">
+      <include name="${jarname}"/>
+    </fileset>
+  </copy>
+  <tar destfile="${build}/shar.tar.gz" compression="gzip">
+    <tarfileset dir="${sharbuild}" prefix="."/>
+  </tar>
+  <concat destfile="${depbase}/${sharname}">
+    <filelist dir="shar" files="sh-header"/>
+    <filelist dir="${build}" files="shar.tar.gz"/>
+  </concat>
+</target>
+
 <target name="jarsign" depends="jar">
   <input message="Type in your key password:" addproperty="keypass"/>
   <signjar jar="${depbase}/${jarname}" alias="devries" storepass="${keypass}"/>
@@ -61,6 +86,26 @@
     <fileset dir="${jnlpdir}"/>
   </copy>
   <copy file="${depbase}/${jarname}" todir="${jnlpdeploy}"/>
+</target>
+
+<target name="sdist" depends="prepare">
+  <copy todir="${distbuild}">
+    <fileset dir="${basedir}">
+      <include name="src/**"/>
+      <include name="conf/**"/>
+      <include name="doc/**"/>
+      <include name="helpdoc/**"/>
+      <include name="icons/**"/>
+      <include name="build.xml"/>
+      <exclude name="**/CVS/*"/>
+    </fileset>
+  </copy>
+  <zip destfile="${depbase}/infopad.zip">
+    <zipfileset dir="${distbuild}" prefix="infopad"/>
+  </zip>
+  <tar destfile="${depbase}/infopad.tar.gz" compression="gzip">
+    <tarfileset dir="${distbuild}" prefix="infopad"/>
+  </tar>
 </target>
 
 </project>
