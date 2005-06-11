@@ -9,7 +9,8 @@
   <property name="docdir" value="${build}/doc"/>
   <property name="fset" value="com/idolstarastronomer/infopad/**"/>
   <property name="jnlpdir" value="${basedir}/jnlp"/>
-  <property name="jnlpdeploy" value="${depbase}/jnlp"/>
+  <property name="webdeploy" value="${depbase}/web"/>
+  <property name="jnlpdeploy" value="${webdeploy}/jnlp"/>
   <property name="jarname" value="infopad.jar"/>
   <property name="conf" value="${basedir}/conf"/>
   <property name="distbuild" value="${build}/sdist"/>
@@ -79,6 +80,15 @@
 <target name="jarsign" depends="jar">
   <input message="Type in your key password:" addproperty="keypass"/>
   <signjar jar="${depbase}/${jarname}" alias="devries" storepass="${keypass}"/>
+</target>
+
+<target name="web" depends="prepare">
+  <copy todir="${webdeploy}">
+    <fileset dir="${basedir}/web"/>
+    <fileset dir="${basedir}/icons">
+      <include name="icon-trans-small.png"/>
+    </fileset>
+  </copy>
 </target>
 
 <target name="jnlp" depends="jarsign">
