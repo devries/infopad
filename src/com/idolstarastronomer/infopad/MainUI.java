@@ -203,7 +203,6 @@ public class MainUI extends JFrame {
 	selectAllAction.putValue(Action.NAME, "Select All");
 	selectAllAction.putValue(Action.MNEMONIC_KEY,new Integer(KeyEvent.VK_A));
 	selectAllAction.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_A,selectAllMask));
-	System.out.println(DefaultEditorKit.selectAllAction);
 	JMenuItem selectAllItem = new JMenuItem(selectAllAction);
 
 	editmenu.add(cutItem);
