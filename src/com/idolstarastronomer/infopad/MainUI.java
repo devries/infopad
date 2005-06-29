@@ -78,7 +78,12 @@ public class MainUI extends JFrame {
 	// notePad.addMouseListener(new UnixSelectionPasteListener(notePad));
 
 	// Set ctrl-a and ctrl-e to navigate to beginning and end of lines
-	// ctrl-k deletes to end of line
+	// ctrl-k deletes to end of line. I couldn't find a good way to make
+	// ctrl-a not select all, so I inputMapped it to "noop-action" which is
+	// just plain made up, but appears to work under linux.
+	InputMap inputMap = notePad.getInputMap();
+	inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A,Event.CTRL_MASK), "noop-action");
+
 	notePad.addKeyListener(new CtrlKListener(notePad));
 
 	// Get the notePad's highlighter for use with searches
@@ -166,19 +171,20 @@ public class MainUI extends JFrame {
 	    });
 	
 	// Edit Menu
-	Action cutAction = notePad.getActionMap().get(DefaultEditorKit.cutAction);
+	ActionMap actionMap = notePad.getActionMap();
+	Action cutAction = actionMap.get(DefaultEditorKit.cutAction);
 	cutAction.putValue(Action.NAME, "Cut");
 	cutAction.putValue(Action.MNEMONIC_KEY,new Integer(KeyEvent.VK_T));
 	cutAction.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_X,shortcutKeyMask));
 	JMenuItem cutItem = new JMenuItem(cutAction);
 
-	Action copyAction = notePad.getActionMap().get(DefaultEditorKit.copyAction);
+	Action copyAction = actionMap.get(DefaultEditorKit.copyAction);
 	copyAction.putValue(Action.NAME, "Copy");
 	copyAction.putValue(Action.MNEMONIC_KEY,new Integer(KeyEvent.VK_C));
 	copyAction.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_C,shortcutKeyMask));
 	JMenuItem copyItem = new JMenuItem(copyAction);
 
-	Action pasteAction = notePad.getActionMap().get(DefaultEditorKit.pasteAction);
+	Action pasteAction = actionMap.get(DefaultEditorKit.pasteAction);
 	pasteAction.putValue(Action.NAME,"Paste");
 	pasteAction.putValue(Action.MNEMONIC_KEY,new Integer(KeyEvent.VK_V));
 	pasteAction.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_V,shortcutKeyMask));
@@ -193,10 +199,11 @@ public class MainUI extends JFrame {
 	    selectAllMask = shortcutKeyMask;
 	}
 
-	Action selectAllAction = notePad.getActionMap().get(DefaultEditorKit.selectAllAction);
+	Action selectAllAction = actionMap.get(DefaultEditorKit.selectAllAction);
 	selectAllAction.putValue(Action.NAME, "Select All");
 	selectAllAction.putValue(Action.MNEMONIC_KEY,new Integer(KeyEvent.VK_A));
 	selectAllAction.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_A,selectAllMask));
+	System.out.println(DefaultEditorKit.selectAllAction);
 	JMenuItem selectAllItem = new JMenuItem(selectAllAction);
 
 	editmenu.add(cutItem);
